@@ -6,4 +6,4 @@
 ###### 11209台北市職能發展學院
 
 ## pip
-[pip]("https://www.maxlist.xyz/2019/07/13/pip-install-python/")
+[pip](https://www.maxlist.xyz/2019/07/13/pip-install-python/)
