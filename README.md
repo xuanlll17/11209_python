@@ -8,13 +8,3 @@
 # 參考資料
 > pip https://www.maxlist.xyz/2019/07/13/pip-install-python/
 
-# 上課資料
-> 0918
-
-> 0920
-
-> 0922
-
-> 0926
-
-> [0928]()
