@@ -1,12 +1,9 @@
 import dataSource   #自訂module
 
 def main():
-    try:
-        data_list = dataSource.download()
-    except Exception as e:   #如果傳出Exception會輸出    #except就所有錯誤
-        print(f"錯誤:{e}")
-    else:
-        for row in data_list:   #row 變量名
-            print(row)
+   cities = dataSource.cities_info() #function要括號
+   for city in cities: #輸出會一行一行輸
+    print(city) #不用for in -> 會輸出二維list
+
 if __name__ == "__main__":
     main()  #呼叫main function

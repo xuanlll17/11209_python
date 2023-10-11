@@ -2,7 +2,9 @@ import requests
 import csv
 import io
 
-def download() -> list[list]:
+__cities = []   #變數
+
+def __download() -> list[list]:
     url = 'https://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=CA18EE06-4A50-4861-9D97-7853353D7108'
     response = requests.request('GET',url)
     try:
@@ -19,3 +21,17 @@ def download() -> list[list]:
             csv_reader = csv.reader(file)
             next(csv_reader)    #跳讀下一行 #第一行不要
             return list(csv_reader)   #取得內容
+        
+def cities_info() -> list:
+    if len(__cities) == 0:   #查list長度    #檢查list是否是空字串
+        try:
+            data_list = __download()
+        except Exception as e:   #如果傳出Exception會輸出    #except就所有錯誤
+            print(f"錯誤:{e}")
+        else:
+            for row in data_list:   #row 變量名
+                if row[0] == '111':
+                    __cities.append(row)    #資料加進去
+    return __cities   #如果出錯會傳出空list
+   
+    
