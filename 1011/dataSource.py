@@ -41,5 +41,15 @@ def cityNames() -> list[str]:
         cityName = row[1]
         names.append(cityName)  
     return names
+
+def info(name:str) -> list[str]:
+    cities = cities_info()
+    #print(type(cities))
+    for city in cities:
+        #print(city1[1])
+        if city[1] == name: #比對是否相同
+            return city
+
+    return []   #for in 跑完沒找到相同的就會輸出空[]
    
     
