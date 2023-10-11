@@ -33,5 +33,13 @@ def cities_info() -> list:
                 if row[0] == '111':
                     __cities.append(row)    #資料加進去
     return __cities   #如果出錯會傳出空list
+
+def cityNames() -> list[str]:
+    cities = cities_info()
+    names = []
+    for row in cities:  #一個一個抓出來放入list
+        cityName = row[1]
+        names.append(cityName)  
+    return names
    
     
