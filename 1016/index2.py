@@ -1,6 +1,6 @@
 '''
 文件的說明
-學習 Canvas 顯示圖片
+Label顯示image -> Label + Pillow
 '''
 import tkinter as tk
 from tkinter import ttk
@@ -19,11 +19,8 @@ class MyFrame(tk.Frame):
         self.configure(background='#FEDFE1')
         self.img = Image.open("pets.png")
         self.pets = ImageTk.PhotoImage(self.img)
-        canvas = tk.Canvas(self, 
-                           width=self.img.size[0], #48
-                           height=self.img.size[1]) #48
-        canvas.create_image(24, 24, image = self.pets, anchor = tk.CENTER)
-        canvas.pack()
+        petLabel = tk.Label(self, image=self.pets)
+        petLabel.pack()
         self.pack(expand=1, fill='both')
 
 def main():

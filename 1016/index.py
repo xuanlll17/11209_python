@@ -1,6 +1,6 @@
 '''
 文件的說明
-學習 Canvas
+學習 Canvas 畫線
 '''
 import tkinter as tk
 from tkinter import ttk #使用ttk(新)(沒有全部)要從tkinter裡import, tkinter裡放tk(舊)
