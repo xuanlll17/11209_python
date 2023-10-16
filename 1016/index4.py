@@ -9,6 +9,7 @@ from PIL import Image, ImageTk
 class Window(tk.Tk):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.geometry("+800+300")
         self.title("Lines")
         #self.configure(background='#ED784A')        
 
