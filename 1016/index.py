@@ -16,6 +16,11 @@ class MyFrame(tk.Frame): #(tk.Frame) -> 繼承tk.Frame
     def __init__(self,master,**kwargs): #自訂class一定要有__init__
         super().__init__(master,**kwargs) #(呼叫) master = master/ master 相同
         self.configure(background='#FEDFE1')
+        canvas = tk.Canvas(self)
+        canvas.create_line(15, 30, 200, 30) #canvas預設無大小, 設定pack
+        canvas.create_line(300, 35, 300, 200, dash=(4, 2))
+        canvas.create_line(55, 85, 155, 85, 105, 180, 55, 85)
+        canvas.pack(expand=1, fill='both')
         self.pack(expand=1, fill='both') #expand = 1(True)/0(False)先擴充, 在填滿 fill = 'both兩邊/x上下/y左右' 
 
 def main():
