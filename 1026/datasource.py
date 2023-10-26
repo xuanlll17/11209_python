@@ -30,7 +30,7 @@ def __create_table(conn:sqlite3.Connection):
 			"可借"	INTEGER,
 			"可還"	INTEGER,
 			PRIMARY KEY("id" AUTOINCREMENT),
-            UNIQUE("站點名稱","更新時間") ON CONFLICT REPLACE
+            UNIQUE(站點名稱,更新時間) ON CONFLICT REPLACE
 		);
 		'''
     )
