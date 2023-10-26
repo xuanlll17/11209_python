@@ -19,7 +19,7 @@ def __create_table(conn:sqlite3.Connection):
     cursor = conn.cursor()
     cursor.execute(
         '''
-		CREATE TABLE IF NOT EXISTS 台北市(
+		CREATE TABLE IF NOT EXISTS 台北市youbike(
 			"id"	INTEGER,
 			"站點名稱"	TEXT NOT NULL,
 			"行政區"	TEXT NOT NULL,
