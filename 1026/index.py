@@ -24,7 +24,7 @@ t = None                              #全域變數
 def update_data()->None:              #主執行序關閉會一起關閉
     datasource.update_sqlite_data()
     global t                          #global t -> t = None的t
-    t = Timer(20, update_data)        #每20秒一次 global t
+    t = Timer(20, update_data)        #每20秒一次 #t = global t #update_data 自己呼叫自己 一直執行
     t.start()       #global t
 
 
@@ -34,7 +34,7 @@ def main():
     window.geometry('600x300')                              #設定視窗大小
     window.resizable(width=False,height=False)              #禁止改變視窗大小resizable
     update_data()
-    #window.protocol("WM_DELETE_WINDOW", on_closing)        #當按到關閉,執行on_closing()
+    #window.protocol("WM_DELETE_WINDOW", on_closing)        #當按到關閉,執行on_closing() #WM_DELETE_WINDOW不能更動
     window.protocol("WM_DELETE_WINDOW", lambda:on_closing(window))      #匿名的fun:lambda
     window.mainloop()
     
@@ -58,7 +58,7 @@ def main():
     #window.geometry('600x300')
     #window.resizable(width=False,height=False)
     #update_data()
-    #window.protocol("WM_DELETE_WINDOW",on_closing)      
+    #window.protocol("WM_DELETE_WINDOW",on_closing)  #註冊視窗關閉,關閉update_data執行    
     #window.mainloop()
 
 
