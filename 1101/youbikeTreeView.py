@@ -36,28 +36,5 @@ class YoubikeTreeView(ttk.Treeview):
             self.insert('','end',values=site)
 
 
-def search():
-    query = search_entry.get()
-    selections = []
-    for child in tree.get_children():
-        if query.lower() in tree.item(child)['values'].lower():   # compare strings in  lower cases.
-            print(tree.item(child)['values'])
-            selections.append(child)
-    print('search completed')
-    tree.selection_set(selections)
-    
 
-
-    values = []
-
-    root = tk.Tk()
-    root.title("Medicine database")
-
-    lb1 = tk.Label(root, text="Search:")
-    lb1.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
-    search_entry = tk.Entry(root, width=15)
-    search_entry.grid(row=0, column=1, padx=10, pady=10, sticky=tk.E, rowspan=1)
-    btn = tk.Button(root, text="search", width=10, command=search)
-    btn.grid(row=0, column=0, padx=10, pady=10, rowspan=2)
-    
    
