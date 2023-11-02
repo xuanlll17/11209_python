@@ -4,6 +4,7 @@ from tkinter import messagebox
 import datasource
 from youbikeTreeView import YoubikeTreeView
 
+
 class Window(tk.Tk):                       #繼承tkinter裡的Tk
     def __init__(self, **kwargs):          #keyword = kw, args = 引數
         super().__init__(**kwargs)         #呼叫父類別的__init__, self不用寫 
