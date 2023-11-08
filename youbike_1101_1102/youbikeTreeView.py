@@ -101,3 +101,14 @@ class ShowDetail(Dialog):
         bempvar = tk.StringVar()
         bempvar.set(self.bemp)
         tk.Entry(mainFrame,textvariable=bempvar, state='disabled').grid(column=1, row=6)
+
+    def buttonbox(self):
+        
+        box = tk.Frame(self)
+
+        w = tk.Button(box, text="確認", width=10, command=self.ok, default='active')
+        w.pack(padx=5, pady=(5,20))
+        
+        self.bind("<Return>", self.ok)
+
+        box.pack()
