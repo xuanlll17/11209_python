@@ -60,6 +60,9 @@ class ShowDetail(Dialog):
         
 
     def body(self, master):
+        '''
+        override body
+        '''
         #super().body(master)
         mainFrame = tk.Frame(master)
         mainFrame.pack(padx=100, pady=100)
@@ -103,12 +106,12 @@ class ShowDetail(Dialog):
         tk.Entry(mainFrame,textvariable=bempvar, state='disabled').grid(column=1, row=6)
 
     def buttonbox(self):
-        
+        '''
+        override buttonbox
+        '''
         box = tk.Frame(self)
-
         w = tk.Button(box, text="確認", width=10, command=self.ok, default='active')
         w.pack(padx=5, pady=(5,20))
-        
         self.bind("<Return>", self.ok)
 
         box.pack()
