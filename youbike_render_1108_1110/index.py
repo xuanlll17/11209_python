@@ -63,7 +63,7 @@ def main():
         w.youbikeTreeView.update_content(lastest_data)
         #w.after(5*60*1000,update_data,w) #每5分鐘執行,w參數傳遞到def update_data(w)
         
-        t = Timer(5*60, update_data,args=(window,))
+        t = Timer(6, update_data,args=(window,))
         t.start()
 
     window = Window()
