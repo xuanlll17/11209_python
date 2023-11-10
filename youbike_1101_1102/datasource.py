@@ -41,7 +41,6 @@ def __create_table(conn:sqlite3.Connection):
 
 
 def __insert_data(conn:sqlite3.Connection,values:list[any])->None:
-    #執行完cursor會自動關閉 #離開程式區塊會自動關閉with ... as .:
     cursor = conn.cursor()
     sql = '''
         REPLACE INTO 台北市youbike(站點名稱,行政區,更新時間,地址,總車輛數,可借,可還)
