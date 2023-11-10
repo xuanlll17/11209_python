@@ -4,7 +4,7 @@ import password as pw
 
 #__all__=['update_sqlite_data']
 
-#download data-----------------------------------------------------------------
+#-----------------download data-----------------#
 def download_youbike_data()->list[dict]:
     '''
     下載台北市youbike資料2.0
@@ -16,7 +16,7 @@ def download_youbike_data()->list[dict]:
     print('下載成功')
     return response.json()
 
-#create sql table--------------------------------------------------------------
+#---------------create sql table----------------#
 def create_table(conn)->None:
     cursor = conn.cursor()
     cursor.execute(

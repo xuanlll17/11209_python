@@ -4,7 +4,8 @@ import password as pw
 
 def main():
     jsonData = datasource.download_youbike_data()
-    #-----------------連線到postgresql-----------------#
+
+    #---------------連線到postgresql----------------#
     try:
         conn = psycopg2.connect(database=pw.DATABASE,
                                 user=pw.USER, 
