@@ -17,7 +17,7 @@ def download_youbike_data()->list[dict]:
     return response.json()
 
 #create sql table--------------------------------------------------------------
-def create_table(conn):
+def create_table(conn)->None:
     cursor = conn.cursor()
     cursor.execute(
         '''
@@ -41,8 +41,8 @@ def create_table(conn):
 def insert_data(conn,values:list[any])->None:
     cursor = conn.cursor()
     sql = '''
-        REPLACE INTO 台北市youbike(站點名稱,行政區,更新時間,地址,總車輛數,可借,可還)
-        VALUES(?,?,?,?,?,?,?)
+        INSERT INTO 台北市youbike(站點名稱,行政區,更新時間,地址,總車輛數,可借,可還)
+        VALUES(%s,%s,%s,%s,%s,%s,%s)
     '''
     cursor.execute(sql,values)
     conn.commit()
