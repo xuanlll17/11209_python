@@ -56,7 +56,8 @@ def update_render_data()->None:
     #---------------連線到postgresql----------------#
     conn = psycopg2.connect(database=pw.DATABASE,
                                 user=pw.USER, 
-                                password=pw.PASSWORD, host=pw.HOST, 
+                                password=pw.PASSWORD,
+                                host=pw.HOST, 
                                 port="5432")
    
     __create_table(conn)
@@ -67,7 +68,8 @@ def update_render_data()->None:
 def lastest_datetime_data()->list[tuple]:
     conn = psycopg2.connect(database=pw.DATABASE,
                             user=pw.USER, 
-                            password=pw.PASSWORD, host=pw.HOST, 
+                            password=pw.PASSWORD,
+                            host=pw.HOST, 
                             port="5432")
     cursor = conn.cursor()              
     sql = '''
@@ -89,7 +91,8 @@ def lastest_datetime_data()->list[tuple]:
 def search_sitename(word:str) -> list[tuple]:
     conn = psycopg2.connect(database=pw.DATABASE,
                             user=pw.USER, 
-                            password=pw.PASSWORD, host=pw.HOST, 
+                            password=pw.PASSWORD,
+                            host=pw.HOST, 
                             port="5432")
     cursor = conn.cursor()
     sql = '''
