@@ -3,6 +3,7 @@ import psycopg2
 import password as pw
 
 __all__=['update_render_data']
+threadRun = True # 次執行緒是否執行
 
 #-----------------download data-----------------#
 def __download_youbike_data()->list[dict]:
@@ -62,7 +63,10 @@ def update_render_data()->None:
    
     __create_table(conn)
     for item in data:
-        __insert_data(conn,values=[item['sna'],item['sarea'],item['mday'],item['ar'],item['tot'],item['sbi'],item['bemp']])
+        if threadRun == True:
+            __insert_data(conn,values=[item['sna'],item['sarea'],item['mday'],item['ar'],item['tot'],item['sbi'],item['bemp']])
+        else:
+            break
     conn.close()
 
 def lastest_datetime_data()->list[tuple]:

@@ -4,6 +4,8 @@ from tkinter import messagebox
 import datasource
 from youbikeTreeView import YoubikeTreeView
 from threading import Timer
+from threading import Thread
+import time
 
 class Window(tk.Tk):
     def __init__(self, **kwargs):
@@ -51,8 +53,9 @@ class Window(tk.Tk):
             self.youbikeTreeView.update_content(site_datas=search_data)
 
 def main():
-    def update_data(w:Window)->None:
-
+    def update_data(w:Window)->None: # w:Window 傳進來的參數
+        
+        global t
         try:
             datasource.update_render_data()
             #pass
@@ -60,23 +63,38 @@ def main():
             messagebox.showerror('錯誤','將關閉應用程式\n請稍後再試')
 
         lastest_data = datasource.lastest_datetime_data()
-        w.youbikeTreeView.update_content(lastest_data)
-        #w.after(5*60*1000,update_data,w) #每5分鐘執行,w參數傳遞到def update_data(w)
+        try:
+            w.youbikeTreeView.update_content(lastest_data)
+            
+        except RuntimeError: # 次執行中心會產生RuntimeError的錯誤
+            return
         
-        t = Timer(6, update_data,args=(window,))
+        #w.after(5*60*1000,update_data,w) #每5分鐘執行,w參數傳遞到def update_data(w)
+        t = Timer(5*60, update_data,args=(window,)) # args = ()(tuple) -> window,
+        
         t.start()
 
+    global t, window # 建立才要用global 
     window = Window()
     window.title('台北市youbike2.0')
     window.resizable(width=False,height=False)
+    window.protocol("WM_DELETE_WINDOW", on_closing) # register -> 只寫function名，表示註冊，非執行
     #window.after(1000,update_data,window)
     
     #-----update treeview data-----#
     lastest_data = datasource.lastest_datetime_data()
     window.youbikeTreeView.update_content(lastest_data)
     t = Timer(1, update_data,args=(window,))
+    #print(id(t))
     t.start()
     window.mainloop()
 
+def on_closing():
+    datasource.threadRun = False
+    window.destroy()
+    t.cancel() # 使用不需要加global
+
 if __name__ == '__main__':
+    t = None
+    window = None
     main()

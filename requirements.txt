@@ -1,3 +1,4 @@
 PyInputPlus
 requests
 psycopg2-binary
+pyinstaller
