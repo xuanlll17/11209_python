@@ -5,12 +5,32 @@ ON CONFLICT (站點名稱,更新時間) DO NOTHING
 select * from 台北市youbike
 where 站點名稱 = 'YouBike2.0_一壽橋'
 
+--搜尋最新時間的資料
 select a.* 
 from 台北市youbike a join (select distinct 站點名稱,max(更新時間) 更新時間
 from 台北市youbike group by 站點名稱) b 
 on a.更新時間=b.更新時間 and a.站點名稱=b.站點名稱
 
+SELECT *
+FROM 台北市youbike
+WHERE (更新時間,站點名稱) IN (
+	SELECT MAX(更新時間),站點名稱
+	FROM 台北市youbike
+	GROUP BY 站點名稱
+) 
 
+--搜尋站點
+SELECT *
+FROM 台北市youbike
+WHERE (更新時間,站點名稱) IN (
+	SELECT MAX(更新時間),站點名稱
+	FROM 台北市youbike
+	GROUP BY 站點名稱
+) AND 站點名稱 like '%台北%'
+
+--計算id筆數
+SELECT COUNT(id) as 筆數
+FROM 台北市youbike
 
 
 
