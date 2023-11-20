@@ -1,8 +1,12 @@
 from flask import Flask, url_for, render_template
 import random
 import pandas as pd
+from auth import auth
+
 
 app = Flask(__name__)
+# 註冊blueprint
+app.register_blueprint(auth.bp)
 
 @app.route('/')
 def index():
