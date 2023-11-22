@@ -1,9 +1,15 @@
+<!---繼承base.html-->
 {% extends "bs/base.html" %}   <!---從根目錄開始-->
+
+<!---網頁標題-->
 {% block title %}bootstrap{% endblock %}
+
+<!---網頁連結css-->
 {% block csslink %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/bs/index.css')}}">
 {% endblock %}
 
+<!---網頁直接新增css-->
 {% block head %}
     {{ super() }} <!---原本的保留,再加入新的-->
     <style>       
@@ -11,4 +17,9 @@
             background-color: blueviolet;
         }
     </style>
+{% endblock %}
+
+<!---網頁內容-->
+{% block main %}
+<h1>我是bootstrap</h1>
 {% endblock %}
