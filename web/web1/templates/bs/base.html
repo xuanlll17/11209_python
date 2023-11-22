@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}BS的根目錄{% endblock %}</title> <!---block 名-->
+    <title>{% block title %}{% endblock %}</title> <!---block 名-->
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
     <!--自訂css-->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bs/index.css')}}">
+    
+    {% block csslink %}{% endblock %}
 </head>
 
 <body>

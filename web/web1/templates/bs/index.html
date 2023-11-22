@@ -1,1 +1,5 @@
 {% extends "bs/base.html" %}   <!---從根目錄開始-->
+{% block title %}bootstrap{% endblock %}
+{% block csslink %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/bs/index.css')}}">
+{% endblock %}
