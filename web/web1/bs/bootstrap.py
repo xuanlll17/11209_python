@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from . import datasource
 
 bp = Blueprint('bs', __name__, url_prefix='/bs')
 
@@ -17,3 +18,4 @@ def profile():
 @bp.route("/test1")
 def test():
     return render_template("bs/test1.html")
+

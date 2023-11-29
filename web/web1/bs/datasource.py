@@ -1,6 +1,6 @@
 import requests
 import psycopg2
-import password as pw
+from . import password as pw #from 從當前目錄 import package 
 
 __all__=['update_render_data']
 
