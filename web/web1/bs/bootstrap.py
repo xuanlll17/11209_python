@@ -13,3 +13,7 @@ def product():
 @bp.route("/profile")
 def profile():
     return render_template("bs/profile.html")
+
+@bp.route("/test1")
+def test():
+    return render_template("bs/test1.html")
