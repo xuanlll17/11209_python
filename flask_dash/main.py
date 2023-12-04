@@ -1,12 +1,13 @@
 from flask import Flask, render_template,url_for
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from dash_file.dash_app1 import dash1
 from werkzeug.serving import run_simple
+from dash_file.dash_app1 import dash1  #package裡的module import
 
+#只有.py可以及時更新
 app = Flask(__name__)
 application = DispatcherMiddleware(
     app,
-    {"/dash/app1": dash1.server},
+    {"/app1": dash1.server},  #一定要有.server
 )
 
 @app.route("/")
