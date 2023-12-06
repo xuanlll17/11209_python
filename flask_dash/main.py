@@ -7,7 +7,7 @@ from dash_file.dash_app1 import dash1  #package裡的module import
 app = Flask(__name__)
 application = DispatcherMiddleware(
     app,
-    {"/app1": dash1.server},  #一定要有.server
+    {"/dash/app1": dash1.server},  #一定要有.server
 )
 
 @app.route("/")

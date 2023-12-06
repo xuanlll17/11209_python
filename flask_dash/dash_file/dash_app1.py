@@ -4,7 +4,7 @@ import pandas as pd
 
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder_unfiltered.csv')
 
-dash1 = Dash(requests_pathname_prefix="/app1/")  #建立時一定要加路徑
+dash1 = Dash(requests_pathname_prefix="/dash/app1/")  #建立時一定要加路徑
 
 dash1.layout = html.Div([
     html.H1(children='Title of Dash App', style={'textAlign':'center'}),
