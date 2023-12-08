@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask_Dash</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
-</head>
-<body>
-    <h1>
-        Flask_Dash
-        <small class="text-body-secondary">With faded secondary text</small>
-    </h1>
-    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
-</body>
-</html>
+{% extends "base_nav.html" %}
+<!--要更改html要使用flask --app yourname run --debug-->
+
+{% block title %}
+Flask_dash
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        @media (min-width: 576px) {
+            
+        }
+
+        @media (min-width: 768px) {
+
+        }
+
+        @media (min-width: 992px) {
+
+        }
+
+        @media (min-width: 1200px) {
+
+        }
+
+        @media (min-width: 1400px) {
+
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="content-lg">
+        <h1>Flask_Dash__及時更新</h1>
+        {{ super() }}
+    </div>
+{% endblock %}
+
+{% block footer %}
+        &copy; Copyright 2023 by <a href="https://flask-dash-web.onrender.com">you</a>.
+{% endblock %}
