@@ -1,10 +1,16 @@
-from dash import Dash, html      #只有import後面的能用
+from dash import Dash, html, dash_table      #只有import後面的能用
 import dash_bootstrap_components as dbc
 import pandas as pd
 
 
 dash2 = Dash(requests_pathname_prefix="/dash/app2/", external_stylesheets=[dbc.themes.BOOTSTRAP])  #建立時一定要加路徑
 dash2.title = "臺北市youbike及時資料"
+
+df = pd.DataFrame({
+    "水果": ["Apple", "Orange", "Bananas", "Apples", "Oranges", "Bananas"],
+    "數量": [4, 1, 2, 2, 4, 5],
+    "程式": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
 
 #property layout
 dash2.layout = html.Div(
@@ -20,6 +26,13 @@ dash2.layout = html.Div(
             html.Div([
                 html.Div([
                     html.H1("台北市youbike及時資料")
+                ],className="col text-center")
+            ],
+            className="row",
+            style={"paddingTop":'2rem'}),
+            html.Div([
+                html.Div([
+                    dash_table.DataTable(data=df.to_dict('records')),
                 ],className="col text-center")
             ],
             className="row",
