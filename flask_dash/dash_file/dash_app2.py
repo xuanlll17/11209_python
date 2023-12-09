@@ -23,7 +23,7 @@ dash2.layout = html.Div(
                 ],className="col text-center")
             ],
             className="row",
-            style={"paddingTop":'3rem'}),
+            style={"paddingTop":'2rem'}),
         ])
     ],
     className="container-lg",
