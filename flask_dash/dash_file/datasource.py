@@ -1,7 +1,7 @@
 import requests
 import psycopg2
-#from . import password as pw #from 從當前目錄 import package 
-import password as pw
+from . import password as pw #from 從當前目錄 import package 
+
 
 
 def lastest_datetime_data()->list[tuple]:
