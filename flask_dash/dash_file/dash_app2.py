@@ -1,13 +1,15 @@
 from dash import Dash, html, dash_table      #只有import後面的能用
 import dash_bootstrap_components as dbc
 import pandas as pd
-from . import datasource
+from . import datasource  #在.py一定要用from . 根目錄 import
 
 
 dash2 = Dash(requests_pathname_prefix="/dash/app2/", external_stylesheets=[dbc.themes.BOOTSTRAP])  #建立時一定要加路徑
 dash2.title = "臺北市youbike及時資料"
 lastest_data = datasource.lastest_datetime_data()
 lastest_df = pd.DataFrame(lastest_data, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
+lastest_df1 = lastest_df.reset_index()
+lastest_df1['站點名稱'] = lastest_df1['站點名稱'].map(lambda name:name[11:])
 
 #property layout
 dash2.layout = html.Div(
@@ -30,9 +32,11 @@ dash2.layout = html.Div(
             html.Div([
                 html.Div([
                 dash_table.DataTable(
-                    data=lastest_df.to_dict('records'), 
-                    columns=[{"id": column, "id": column} for column in lastest_df.columns],
-                    page_size=20
+                    data=lastest_df1.to_dict('records'), 
+                    columns=[{"id": column, "name": column} for column in lastest_df1.columns],
+                    page_size=20,
+                    fixed_rows={'headers': True},
+                    style_table={'height': '300px', 'overflowY': 'auto'}
                 ),  #先轉list dict 才能輸出
                 ],className="col text-center")
             ],
