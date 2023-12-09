@@ -15,9 +15,6 @@ lastest_df1['站點名稱'] = lastest_df1['站點名稱'].map(lambda name:name[1
 dash2.layout = html.Div(
     #要放多個,所以用list代替  #一定要把layout内容對齊
     [
-        #html.H1("Bootstrap Layout"),
-        #html.P("這是段落1"),
-        #html.P("這是段落2"),
         #html.A("Icon by doraclub", href="https://www.freepik.com/icon/bicycle_3918391#fromView=search&term=Favicon++bike&page=1&position=8&track=ais&uuid=4cefbc82-a159-4736-a7d2-705faa293b14", target='_blank')
         
         dbc.Container([
@@ -32,12 +29,30 @@ dash2.layout = html.Div(
             html.Div([
                 html.Div([
                 dash_table.DataTable(
+                    #先轉list dict 才能輸出
                     data=lastest_df1.to_dict('records'), 
                     columns=[{"id": column, "name": column} for column in lastest_df1.columns],
                     page_size=20,
                     fixed_rows={'headers': True},
-                    style_table={'height': '300px', 'overflowY': 'auto'}
-                ),  #先轉list dict 才能輸出
+                    style_table={'height': '300px', 'overflowY': 'auto'},
+                    style_cell_conditional=[
+                        {   'if': {'column_id': 'index'},
+                         'width':'6%'
+                        },
+                        {   'if': {'column_id': '站點名稱'},
+                         'width': '25%'
+                        },
+                        {   'if': {'column_id': '總數'},
+                         'width': '5%'
+                        },
+                        {   'if': {'column_id': '可借'},
+                         'width': '5%'
+                        },
+                        {   'if': {'column_id': '可還'},
+                         'width': '5%'
+                        },
+                    ]
+                ),  
                 ],className="col text-center")
             ],
             className="row",
