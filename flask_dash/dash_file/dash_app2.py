@@ -1,4 +1,4 @@
-from dash import Dash, html, dash_table      #只有import後面的能用
+from dash import Dash, html, dash_table, callback, Input, Output      #只有import後面的能用
 import dash_bootstrap_components as dbc
 import pandas as pd
 from . import datasource  #在.py一定要用from . 根目錄 import
@@ -29,6 +29,8 @@ dash2.layout = html.Div(
             html.Div([
                 html.Div([
                 dash_table.DataTable(
+                    #引數名稱,引數值
+                    id='main_table',
                     #先轉list dict 才能輸出
                     data=lastest_df1.to_dict('records'), 
                     columns=[{"id": column, "name": column} for column in lastest_df1.columns],
@@ -51,9 +53,16 @@ dash2.layout = html.Div(
                         {   'if': {'column_id': '可還'},
                          'width': '5%'
                         },
-                    ]
+                    ],
+                    row_selectable="single",
+                    selected_rows=[],  #一開始選取的位置, [] -> index(0,1,2,....)
                 ),  
                 ],className="col text-center")
+            ],
+            className="row",
+            style={"paddingTop":'2rem'}),
+            html.Div([
+                html.H5("這是第3列",className="col",id='showMessage')
             ],
             className="row",
             style={"paddingTop":'2rem'}),
@@ -63,6 +72,10 @@ dash2.layout = html.Div(
     #style={'backgroundColor':'#666'}   #使用駝峰式命名法
     )
 
-
-#if __name__ == '__main__':
-#    dash1.run(debug=True)
+@callback(
+        Output('showMessage', 'children'),
+        Input('main_table', 'selected_rows') #id名稱,對應property
+)
+def selectedRow(selected_rows):  #傳參數
+    print(selected_rows)  #要有output和input才可以輸出
+    return str(selected_rows)
