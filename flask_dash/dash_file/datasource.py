@@ -1,6 +1,6 @@
 import requests
 import psycopg2
-from . import password as pw #from 從當前目錄 import package 
+from . import password as pw #from 從當前目錄 import package #相對路徑
 #import password as pw  #測試用(.ipynb)
 
 

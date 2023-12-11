@@ -1,4 +1,4 @@
-from dash import Dash, html, dash_table, callback, Input, Output      #只有import後面的能用
+from dash import Dash, html, dash_table, callback, Input, Output, dcc     #只有import後面的能用
 import dash_bootstrap_components as dbc
 import pandas as pd
 from . import datasource  #在.py一定要用from . 根目錄 import
@@ -28,41 +28,59 @@ dash2.layout = html.Div(
             style={"paddingTop":'2rem'}),
             html.Div([
                 html.Div([
-                dash_table.DataTable(
-                    #引數名稱,引數值
-                    id='main_table',
-                    #先轉list dict 才能輸出
-                    data=lastest_df1.to_dict('records'), 
-                    columns=[{"id": column, "name": column} for column in lastest_df1.columns],
-                    page_size=20,
-                    fixed_rows={'headers': True},
-                    style_table={'height': '300px', 'overflowY': 'auto'},
-                    style_cell_conditional=[
-                        {   'if': {'column_id': 'index'},
-                         'width':'6%'
-                        },
-                        {   'if': {'column_id': '站點名稱'},
-                         'width': '25%'
-                        },
-                        {   'if': {'column_id': '總數'},
-                         'width': '5%'
-                        },
-                        {   'if': {'column_id': '可借'},
-                         'width': '5%'
-                        },
-                        {   'if': {'column_id': '可還'},
-                         'width': '5%'
-                        },
-                    ],
+                    html.Div([
+                        dbc.Label("站點名稱"),
+                        dbc.Input(id='input_value',
+                                  placeholder="請輸入站點名稱",
+                                  type="text"),
+                        ])
+                ],className="col"),
+                html.Div([
+                    html.Button('確定', id='submit-val', className="btn btn-primary", n_clicks=None)
+                    ],className="col"),
+                html.Div(children="輸入內容",
+                         id="output-content",
+                         className="col"),
+            ],
+            className="row row-cols-auto align-items-end",
+            style={"paddingTop":'2rem'}),
+            html.Div([
+                html.Div([
+                    dash_table.DataTable(
+                        #引數名稱,引數值
+                        id='main_table',
+                        #先轉list dict 才能輸出
+                        data=lastest_df1.to_dict('records'), 
+                        columns=[{"id": column, "name": column} for column in lastest_df1.columns],
+                        page_size=20,
+                        fixed_rows={'headers': True},
+                        style_table={'height': '300px', 'overflowY': 'auto'},
+                        style_cell_conditional=[
+                            {   'if': {'column_id': 'index'},
+                            'width':'6%'
+                            },
+                            {   'if': {'column_id': '站點名稱'},
+                            'width': '25%'
+                            },
+                            {   'if': {'column_id': '總數'},
+                            'width': '5%'
+                            },
+                            {   'if': {'column_id': '可借'},
+                            'width': '5%'
+                            },
+                            {   'if': {'column_id': '可還'},
+                            'width': '5%'
+                            },
+                        ],
                     row_selectable="single",
                     selected_rows=[],  #一開始選取的位置, [] -> index(0,1,2,....)
                 ),  
                 ],className="col text-center")
             ],
             className="row",
-            style={"paddingTop":'2rem'}),
+            style={"paddingTop":'0.5rem'}),
             html.Div([
-                html.H5("這是第3列",className="col",id='showMessage')
+                html.Div(children="",className="col",id='showMessage')
             ],
             className="row",
             style={"paddingTop":'2rem'}),
@@ -73,9 +91,26 @@ dash2.layout = html.Div(
     )
 
 @callback(
-        Output('showMessage', 'children'),
-        Input('main_table', 'selected_rows') #id名稱,對應property
+        Output('output-content', 'children'),
+        Input('submit-val', 'n_clicks'),
+        Input('input_value', 'value')
 )
-def selectedRow(selected_rows):  #傳參數
-    print(selected_rows)  #要有output和input才可以輸出
-    return str(selected_rows)
+def clickBtn(n_clicks:None | int, inputValue:str):
+    if n_clicks is not None:  #檢查如果不是None
+        #一定要先檢查有沒有按button
+        print(f"n_clicks={n_clicks}")
+        print(inputValue)
+
+@callback(
+        Output('showMessage', 'children'),  #output children(data) to id "showMessage"
+        Input('main_table', 'selected_rows')  #id名稱,對應property
+)
+def selectedRow(selected_rows:list[int]):  #傳參數, selected_rows -> list
+    #要有output和input才可以輸出
+    #取得一個站點,series
+    if len(selected_rows) != 0:  #不等於0,才執行, 一開始沒選擇時會是空的,所以設定if len !=0
+        oneSite:pd.DataFrame = lastest_df1.iloc[selected_rows]  #oneSite裡面儲存的是pd.Series(typeHint)
+        oneTable:dash_table.DataTable = dash_table.DataTable(oneSite.to_dict('records'), [{"name": i, "id": i} for i in oneSite.columns])
+        return [oneTable]
+    
+    return None
