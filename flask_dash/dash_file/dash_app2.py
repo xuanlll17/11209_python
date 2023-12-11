@@ -101,6 +101,7 @@ def clickBtn(n_clicks:None | int, inputValue:str):
         print(f"n_clicks={n_clicks}")
         print(inputValue)
 
+
 @callback(
         Output('showMessage', 'children'),  #output children(data) to id "showMessage"
         Input('main_table', 'selected_rows')  #id名稱,對應property
