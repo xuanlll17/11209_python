@@ -38,9 +38,6 @@ dash2.layout = html.Div(
                 html.Div([
                     html.Button('確定', id='submit-val', className="btn btn-primary", n_clicks=None)
                     ],className="col"),
-                html.Div(children="輸入內容",
-                         id="output-content",
-                         className="col"),
             ],
             className="row row-cols-auto align-items-end",
             style={"paddingTop":'2rem'}),
@@ -101,12 +98,12 @@ def clickBtn(n_clicks:None | int, inputValue:str):
         current_df = pd.DataFrame(searchData, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
         current_df = current_df.reset_index()
         current_df['站點名稱'] = current_df['站點名稱'].map(lambda name:name[11:])
-        print("按確定")
+        #print("按確定")
         return current_df.to_dict('records'),[{"id": column, "name": column} for column in current_df.columns],[]
 
     #n_clicks is None
     #代表第一次啟動
-    print("第一次啟動")
+    #print("第一次啟動")
     current_data = datasource.lastest_datetime_data()
     current_df = pd.DataFrame(current_data, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
     current_df = current_df.reset_index()
