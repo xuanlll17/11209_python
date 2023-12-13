@@ -6,10 +6,10 @@ from . import datasource  #在.py一定要用from . 根目錄 import
 
 dash2 = Dash(requests_pathname_prefix="/dash/app2/", external_stylesheets=[dbc.themes.BOOTSTRAP])  #建立時一定要加路徑
 dash2.title = "臺北市youbike及時資料"
-lastest_data = datasource.lastest_datetime_data()
-lastest_df = pd.DataFrame(lastest_data, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
-lastest_df1 = lastest_df.reset_index()
-lastest_df1['站點名稱'] = lastest_df1['站點名稱'].map(lambda name:name[11:])
+current_data = datasource.lastest_datetime_data()
+current_df = pd.DataFrame(current_data, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
+current_df = current_df.reset_index()
+current_df['站點名稱'] = current_df['站點名稱'].map(lambda name:name[11:])
 
 #property layout
 dash2.layout = html.Div(
@@ -89,21 +89,29 @@ dash2.layout = html.Div(
     )
 
 @callback(
-        [Output('main_table', 'data'),Output('main_table', 'columns')],
+        [Output('main_table', 'data'),Output('main_table', 'columns'),Output('main_table', 'selected_rows')],
         [Input('submit-val', 'n_clicks')],
         [State('input_value', 'value')]
 )
 def clickBtn(n_clicks:None | int, inputValue:str):
+    global current_df  #使用外部的current_df(全域變數)  #須建立, global current_df
     if n_clicks is not None:  #檢查如果不是None
         #一定要先檢查有沒有按button
         searchData:list[tuple] = datasource.search_sitename(inputValue)
-        search_df = pd.DataFrame(searchData, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
-        search_df1 = search_df.reset_index()
-        search_df1['站點名稱'] = search_df1['站點名稱'].map(lambda name:name[11:])
-        return search_df1.to_dict('records'),[{"id": column, "name": column} for column in search_df1.columns]
+        current_df = pd.DataFrame(searchData, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
+        current_df = current_df.reset_index()
+        current_df['站點名稱'] = current_df['站點名稱'].map(lambda name:name[11:])
+        print("按確定")
+        return current_df.to_dict('records'),[{"id": column, "name": column} for column in current_df.columns],[]
+
     #n_clicks is None
     #代表第一次啟動
-    return lastest_df1.to_dict('records'),[{"id": column, "name": column} for column in lastest_df1.columns]
+    print("第一次啟動")
+    current_data = datasource.lastest_datetime_data()
+    current_df = pd.DataFrame(current_data, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
+    current_df = current_df.reset_index()
+    current_df['站點名稱'] = current_df['站點名稱'].map(lambda name:name[11:])
+    return current_df.to_dict('records'),[{"id": column, "name": column} for column in current_df.columns],[]
 
 
 @callback(
@@ -114,7 +122,7 @@ def selectedRow(selected_rows:list[int]):  #傳參數, selected_rows -> list
     #要有output和input才可以輸出
     #取得一個站點,series
     if len(selected_rows) != 0:  #不等於0,才執行, 一開始沒選擇時會是空的,所以設定if len !=0
-        oneSite:pd.DataFrame = lastest_df1.iloc[selected_rows]  #oneSite裡面儲存的是pd.Series(typeHint)
+        oneSite:pd.DataFrame = current_df.iloc[selected_rows]  #oneSite裡面儲存的是pd.Series(typeHint)  #僅取得非建立,不用global current_df
         oneTable:dash_table.DataTable = dash_table.DataTable(oneSite.to_dict('records'), [{"name": i, "id": i} for i in oneSite.columns])
         return [oneTable]
     
