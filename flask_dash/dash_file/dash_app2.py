@@ -1,4 +1,4 @@
-from dash import Dash, html, dash_table, callback, Input, Output, dcc     #只有import後面的能用
+from dash import Dash, html, dash_table, callback, Input, Output, dcc, State     #只有import後面的能用
 import dash_bootstrap_components as dbc
 import pandas as pd
 from . import datasource  #在.py一定要用from . 根目錄 import
@@ -50,8 +50,6 @@ dash2.layout = html.Div(
                         #引數名稱,引數值
                         id='main_table',
                         #先轉list dict 才能輸出
-                        data=lastest_df1.to_dict('records'), 
-                        columns=[{"id": column, "name": column} for column in lastest_df1.columns],
                         page_size=20,
                         fixed_rows={'headers': True},
                         style_table={'height': '300px', 'overflowY': 'auto'},
@@ -91,15 +89,21 @@ dash2.layout = html.Div(
     )
 
 @callback(
-        Output('output-content', 'children'),
-        Input('submit-val', 'n_clicks'),
-        Input('input_value', 'value')
+        [Output('main_table', 'data'),Output('main_table', 'columns')],
+        [Input('submit-val', 'n_clicks')],
+        [State('input_value', 'value')]
 )
 def clickBtn(n_clicks:None | int, inputValue:str):
     if n_clicks is not None:  #檢查如果不是None
         #一定要先檢查有沒有按button
-        print(f"n_clicks={n_clicks}")
-        print(inputValue)
+        searchData:list[tuple] = datasource.search_sitename(inputValue)
+        search_df = pd.DataFrame(searchData, columns=['站點名稱','更新時間','行政區','地址','總數','可借', '可還'])
+        search_df1 = search_df.reset_index()
+        search_df1['站點名稱'] = search_df1['站點名稱'].map(lambda name:name[11:])
+        return search_df1.to_dict('records'),[{"id": column, "name": column} for column in search_df1.columns]
+    #n_clicks is None
+    #代表第一次啟動
+    return lastest_df1.to_dict('records'),[{"id": column, "name": column} for column in lastest_df1.columns]
 
 
 @callback(
