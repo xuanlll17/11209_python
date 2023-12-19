@@ -3,8 +3,10 @@ from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from dash_file.dash_app1 import dash1 
 from dash_file.dash_app2 import dash2
+from auth.auth import blueprint_auth #from 裡面只能放package/module
 
 app = Flask(__name__)
+app.register_blueprint(blueprint_auth)
 
 application = DispatcherMiddleware(
     app,
