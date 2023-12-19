@@ -8,7 +8,9 @@
 {% block head %}
     {{ super() }}
     <style>
-
+        #resetBtn{
+            margin-right: 20px;
+        }
         @media (min-width: 576px) {
             
         }
@@ -38,22 +40,22 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <th scope="row">帳號</th>
+                        <th scope="row" class="col-2">帳號</th>
                         <td>
-                            <input type="text" id="email" name="email" required minlength="4" maxlength="8" size="10" />
+                            <input type="text" class="form-control" id="email" name="email" required minlength="4" maxlength="8" size="10" />
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">密碼</th>
+                        <th scope="row" class="col-2">密碼</th>
                         <td>
-                            <input type="text" id="password" name="password" required minlength="4" maxlength="8" size="10" />  <!--required 一定要有資料-->
+                            <input type="text" class="form-control" id="password" name="password" required minlength="4" maxlength="8" size="10" />  <!--required 一定要有資料-->
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"></th>
                         <td>
-                            <input type="reset" value="重設"/>
-                            <input type="submit" value="確定"/>  <!--輸入的資料會送到/auth/login-->
+                            <input type="reset" id="resetBtn" class="btn btn-secondary" value="重設"/>  <!--id獨一無二-->
+                            <input type="submit" class="btn btn-primary" value="確定"/>  <!--輸入的資料會送到/auth/login-->
                         </td>
                     </tr>
                 </tbody>
