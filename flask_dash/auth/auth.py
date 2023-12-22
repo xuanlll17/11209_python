@@ -1,11 +1,11 @@
-from flask import Blueprint,render_template,request,redirect
+from flask import Blueprint,render_template,request,redirect,session
 from flask_wtf import FlaskForm
 from wtforms import StringField,SelectField,EmailField,BooleanField,DateField,TextAreaField,PasswordField
 from wtforms.validators import DataRequired,Length,Regexp,Optional,EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 #from datetime import datetime #from module import class
-from .datasource import insert_data,InvolidEmailException
+from .datasource import insert_data,InvolidEmailException,validateUser
 import datetime
 
 blueprint_auth = Blueprint('auth', __name__, url_prefix='/auth')  #/auth網址名稱
@@ -20,11 +20,15 @@ class MyForm(FlaskForm):
 def login(email:str | None = None):  #名稱不重要
     form = MyForm()
     if request.method == "POST" and form.validate_on_submit():
-        if request.form['name'] == "12345" and request.form['password'] == "12345":
-            print("密碼正確")
-            return redirect("/auth/success")
+        email = form.email.data
+        password = form.uPass.data
+        is_ok, name = validateUser(email,password)
+        if is_ok:
+            session['username'] = name
+            return redirect("/")
         else:
-            print("密碼錯誤")
+            form.email.errors.append('帳號或密碼錯誤')
+            form.email.data = ""
     else:
         if email is not None:
             form.email.data = email
@@ -97,3 +101,9 @@ def register():
             print("驗證失敗")
 
     return render_template('/auth/register.html',form=form)
+
+
+@blueprint_auth.route('/logout')
+def logout():
+    session.pop('username',default=None)
+    return redirect('/')
