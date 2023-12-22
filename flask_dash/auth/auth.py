@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired,Length,Regexp,Optional,EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 #from datetime import datetime #from module import class
+from .datasource import insert_data
 import datetime
 
 blueprint_auth = Blueprint('auth', __name__, url_prefix='/auth')  #/auth網址名稱
@@ -66,8 +67,12 @@ def register():
             isGetEmail = form.isGetEmail.data
             print("接受促銷","接受" if isGetEmail else "不接受")  #如果True傳出接受,如果False則傳出不接受
 
-            uBirth = form.uBirth.data
-            print("出生年月日",uBirth)
+            uBirth:datetime.date | None = form.uBirth.data
+            if uBirth is not None:
+                uBirth_str:str = uBirth.strftime("%Y-%m-%d")
+                print("出生年月日",uBirth)
+            else:
+                uBirth_str:str = "1900-01-01"
 
             uAboutMe = form.uAboutMe.data
             print("自我介紹",uAboutMe)
@@ -80,6 +85,8 @@ def register():
             #print("密碼正確" if check_password_hash(hash_password,uPass) else "密碼錯誤")
 
             conn_token = secrets.token_hex(16)
+
+            insert_data([uName,uGender,uPhone,uEmail,isGetEmail,uBirth_str,uAboutMe,hash_password,conn_token])
 
             return redirect(f'/auth/login/{uEmail}')
         else:
