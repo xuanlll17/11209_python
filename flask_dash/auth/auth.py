@@ -4,6 +4,8 @@ from wtforms import StringField,SelectField,EmailField,BooleanField,DateField,Te
 from wtforms.validators import DataRequired,Length,Regexp,Optional,EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
+#from datetime import datetime #from module import class
+import datetime
 
 blueprint_auth = Blueprint('auth', __name__, url_prefix='/auth')  #/auth網址名稱
 
