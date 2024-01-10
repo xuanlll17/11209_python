@@ -1,0 +1,84 @@
+{% extends "base_nav.html" %}
+<!--要更改html要使用flask --app yourname run --debug-->
+
+{% block title %}
+登入
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        #resetBtn{
+            margin-right: 20px;
+        }
+        @media (min-width: 576px) {
+            
+        }
+
+        @media (min-width: 768px) {
+
+        }
+
+        @media (min-width: 992px) {
+
+        }
+
+        @media (min-width: 1200px) {
+
+        }
+
+        @media (min-width: 1400px) {
+
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="content-lg">
+        <h1>登入</h1>
+        <form action="" method="post">  <!--不用再做layout-->
+            {{ form.csrf_token }}
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row" class="col-2 text-end">{{ form.email.label }}</th>
+                        <td>
+                            {{ form.email(class='form-control') }}  <!--有無size=20不影響-->
+                            {% if form.email.errors %}
+                            <ul class="errors">
+                                {% for error in form.email.errors %}
+                                <li>
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ error }}
+                                    </div>
+                                </li>
+                            
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="col-2 text-end">{{ form.uPass.label }}</th>
+                        <td>
+                            {{ form.uPass(class='form-control') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td>
+                            <input type="reset" id="resetBtn" class="btn btn-secondary" value="重設"/>  <!--id獨一無二-->
+                            <input type="submit" class="btn btn-primary" value="確定"/>  <!--輸入的資料會送到/auth/login-->
+                            <a href="/auth/register" style="margin-left: 20px;">註冊</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>  <!--預設get->傳出所有訊息都在網址內--> <!--post->將資訊包裹送出到server-->
+        {{ super() }}
+    </div>
+{% endblock %}
+
+{% block footer %}
+        &copy; Copyright 2023 by <a href="https://flask-dash-web.onrender.com">you</a>.
+{% endblock %}

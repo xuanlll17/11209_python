@@ -1,0 +1,147 @@
+{% extends "base_nav.html" %}
+
+{% block title %}
+註冊
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style>
+    #resetBtn {
+        margin-right: 20px;
+    }
+
+    @media (min-width: 576px) {}
+
+
+    @media (min-width: 768px) {}
+
+
+    @media (min-width: 992px) {}
+
+
+    @media (min-width: 1200px) {}
+
+
+    @media (min-width: 1400px) {}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container-lg">
+    <h1>註冊帳號</h1>
+    <form action="" method="post"> <!--不用再做layout-->
+        {{ form.csrf_token }}  <!--一定要放,不然無法傳過來-->
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row" class="col-2 text-end">{{ form.uName.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uName(size=20,class='form-control') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uGender.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uGender(class='form-select') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uPhone.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uPhone(class='form-control') }}
+                        <p class="lead mt-3" style="font-size:0.8rem"><u>格式:0935-314-926</u></p>
+                        {% if form.uPhone.errors %}
+                        <ul class="errors">
+                            {% for error in form.uPhone.errors %}
+                            <li>
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                            </li>
+                
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uEmail.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uEmail(class='form-control') }}
+                        {% if form.uEmail.errors %}
+                        <ul class="errors">
+                            {% for error in form.uEmail.errors %}
+                            <li>
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                            </li>
+                        
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.isGetEmail.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.isGetEmail(class='form-check-input') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uBirth.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uBirth(class='form-control') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uAboutMe.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uAboutMe(class='form-control') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uPass.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uPass(class='form-control') }}
+                        {% if form.uPass.errors %}
+                        <ul class="errors">
+                            {% for error in form.uPass.errors %}
+                            <li>
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                            </li>
+                        
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end">{{ form.uConfirmPass.label(class='form-label') }}</th>
+                    <td>
+                        {{ form.uConfirmPass(class='form-control') }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>
+                        <input type="reset" id="resetBtn" class="btn btn-secondary" value="重設" /> <!--id獨一無二-->
+                        <input type="submit" class="btn btn-primary" value="確定" /> <!--輸入的資料會送到/auth/login-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form> <!--預設get->傳出所有訊息都在網址內--> <!--post->將資訊包裹送出到server-->
+    {{ super() }}
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+&copy; Copyright 2023 by <a href="https://flask-dash-web-uym5.onrender.com">you</a>.
+{% endblock %}
