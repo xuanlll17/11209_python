@@ -18,6 +18,10 @@ def read_root():
     counter = redis_conn.incr('test:increment',1) # 建立redis的key(test:increment)裡面的值每次加一 # 每次執行加一(計數器) # 變數(counter)接收
     return {"Counter": counter} # key("Counter"),值(counter)
 
+@app.get("/counter/{c}")
+def counter(c:int): # 將輸入(c)傳過來(要求整數)
+    counter = redis_conn.incr('test:increment',c) # 建立redis的key(test:increment)裡面的值每次加c # 每次執行加c(計數器) # 變數(counter)接收
+    return {"Counter": counter} # key("Counter"),值(counter)
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None): # q -> query(不在路徑裡)(選填)
