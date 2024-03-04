@@ -1,13 +1,22 @@
 from typing import Union
-
 from fastapi import FastAPI
+import redis
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # 載入.env的環境變數
+# 連線到redis
+redis_conn = redis.Redis.from_url(
+    os.environ.get("REDIS_HOST_PASSWORD")
+)  # 抓電腦的環境變數(REDIS_HOST_PASSWORD)
 
 app = FastAPI()
 
 # server提供了兩個get @app.get("/") @app.get("/items/{item_id}")
 @app.get("/") 
 def read_root():
-    return {"Hello": "World"}
+    counter = redis_conn.incr('test:increment',1) # 建立redis的key(test:increment)裡面的值每次加一 # 每次執行加一(計數器) # 變數(counter)接收
+    return {"Counter": counter} # key("Counter"),值(counter)
 
 
 @app.get("/items/{item_id}")
